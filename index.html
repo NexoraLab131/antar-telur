@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Antar Telur</title>
+<meta name="theme-color" content="#2a1d10">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Antar Telur">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  html,body{margin:0;height:100%;background:#2a1d10;color:#f5ede1;font:16px/1.5 system-ui,sans-serif}
+  #app{position:fixed;inset:0;width:100%;height:100%;border:0;background:#fff;
+       padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);box-sizing:border-box}
+  #muat{position:fixed;inset:0;display:grid;place-items:center;text-align:center;padding:24px;transition:opacity .3s}
+  #muat img{width:96px;height:96px;border-radius:22px}
+  #muat p{margin:14px 0 0;font-weight:700}
+  #pesan{font-weight:400;max-width:420px;font-size:14px;opacity:.85}
+</style>
+</head>
+<body>
+<div id="muat"><div><img src="icon-192.png" alt=""><p>Antar Telur</p><p id="pesan">Memuat aplikasi…</p></div></div>
+<iframe id="app" title="Antar Telur" allow="clipboard-write" hidden></iframe>
+<script>
+  /* ======= GANTI DENGAN LINK APLIKASI ANDA (yang berakhiran /exec) ======= */
+  var LINK_APLIKASI = 'https://script.google.com/macros/s/AKfycbzc6EfvvUCMrmp-bY56J4SxVjt8kBQKc1uYUMphQxWXdUD56WG5Rlngr7KpR9z--TS_/exec';
+  /* ===================================================================== */
+
+  var frame = document.getElementById('app'), muat = document.getElementById('muat');
+  if (LINK_APLIKASI.indexOf('/exec') < 0) {
+    document.getElementById('pesan').textContent =
+      'Link aplikasi belum diisi. Buka file index.html di GitHub, ganti tulisan TEMPEL_LINK_EXEC_DI_SINI dengan link /exec dari Apps Script, lalu simpan.';
+  } else {
+    frame.hidden = false;
+    frame.src = LINK_APLIKASI;
+    frame.addEventListener('load', function () { muat.style.opacity = 0; setTimeout(function () { muat.hidden = true; }, 300); });
+  }
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
+</script>
+</body>
+</html>
